@@ -7,7 +7,7 @@ user_input.addEventListener("keypress", (e) => {
     if (e.key === "Enter") search();
 });
 const button = document.getElementById("button");
-const tbody = document.getElementById("hungry table");
+const tbody = document.getElementById("hungry_table");
 
 const user = {
     name: "",
@@ -61,6 +61,7 @@ async function validate() {
     } catch (error) {
         console.error("Error fetching user runs:", error);
         alert(`Error: User "${user.name}" could not be found.`);
+        activate_button();
         return false;
     }
     return true;
@@ -101,7 +102,7 @@ async function fetch_runs() {
         });
         // add teams to the table
         tbody.innerHTML = "";
-        teams_sorted = Object.fromEntries(
+        const teams_sorted = Object.fromEntries(
             Object.entries(teams).sort(([, a], [, b]) => b.count - a.count),
         );
         for (const [_, data] of Object.entries(teams_sorted)) {
@@ -118,12 +119,6 @@ async function fetch_runs() {
         console.error("Erro durante a busca de runs:", error);
         alert("erro na API");
     }
-}
-
-function show_results() {
-    cats.forEach((cat) => {
-        rows[cat].innerText = user[cat];
-    });
 }
 
 async function search() {
