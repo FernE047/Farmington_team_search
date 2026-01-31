@@ -101,7 +101,10 @@ async function fetch_runs() {
         });
         // add teams to the table
         tbody.innerHTML = "";
-        for (const [_, data] of Object.entries(teams)) {
+        teams_sorted = Object.fromEntries(
+            Object.entries(teams).sort(([, a], [, b]) => b.count - a.count),
+        );
+        for (const [_, data] of Object.entries(teams_sorted)) {
             const tr = document.createElement("tr");
             const teamTd = document.createElement("td");
             teamTd.innerText = data.team_names.join(", ");
